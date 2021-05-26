@@ -2082,6 +2082,12 @@ function () {
     enumerable: false,
     configurable: true
   });
+
+  User.prototype.set = function (update) {
+    this.attributes.set(update);
+    this.events.trigger('change');
+  };
+
   return User;
 }();
 
@@ -2102,7 +2108,9 @@ var user = new User_1.User({
 user.on('change', function () {
   console.log('User was changed');
 });
-user.trigger('change');
+user.set({
+  name: 'New Name'
+});
 },{"./models/User":"src/models/User.ts"}],"../../Users/moodl/AppData/Roaming/nvm/v12.14.1/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2131,7 +2139,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54686" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62357" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
