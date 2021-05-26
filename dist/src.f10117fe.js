@@ -2030,6 +2030,10 @@ function () {
     this.set = function (update) {
       Object.assign(_this.data, update);
     };
+
+    this.getAll = function () {
+      return _this.data;
+    };
   }
 
   return Attributes;
@@ -2088,6 +2092,30 @@ function () {
     this.events.trigger('change');
   };
 
+  User.prototype.fetch = function () {
+    var _this = this;
+
+    var id = this.get('id');
+
+    if (typeof id !== 'number') {
+      throw new Error('Cannot Fetch without id');
+    }
+
+    this.sync.fetch(id).then(function (response) {
+      _this.set(response.data);
+    });
+  };
+
+  User.prototype.save = function () {
+    var _this = this;
+
+    this.sync.save(this.attributes.getAll()).then(function (response) {
+      _this.trigger('save');
+    }).catch(function (err) {
+      _this.trigger('error');
+    });
+  };
+
   return User;
 }();
 
@@ -2102,15 +2130,14 @@ Object.defineProperty(exports, "__esModule", {
 var User_1 = require("./models/User");
 
 var user = new User_1.User({
-  name: 'mini me',
-  age: 12
+  id: 1,
+  name: 'Newer Name',
+  age: 0
 });
-user.on('change', function () {
-  console.log('User was changed');
+user.on('save', function () {
+  console.log(user);
 });
-user.set({
-  name: 'New Name'
-});
+user.save();
 },{"./models/User":"src/models/User.ts"}],"../../Users/moodl/AppData/Roaming/nvm/v12.14.1/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
