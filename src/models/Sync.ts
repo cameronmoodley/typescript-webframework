@@ -1,6 +1,6 @@
 import { HasId } from './../interfaces/iHasId';
-
 import axios, { AxiosPromise } from 'axios';
+
 export class Sync<T extends HasId> {
 	constructor(public rootUrl: string) {}
 

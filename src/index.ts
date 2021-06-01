@@ -1,9 +1,20 @@
+import { UserList } from './views/UserList';
 import { User } from './models/User';
+import { iUserProps } from './interfaces/iUser';
+import { Collection } from './models/Collection';
 
-const user = new User({ id: 1, name: 'Newer Name', age: 0 });
+const users = new Collection(
+	'http://localhost:3000/users',
+	(json: iUserProps) => {
+		return User.buildUser(json);
+	}
+);
 
-user.on('save', () => {
-	console.log(user);
+users.on('change', () => {
+	const root = document.querySelector('#root');
+	if (root) {
+		new UserList(root, users).render();
+	}
 });
 
-user.save();
+users.fetch();
